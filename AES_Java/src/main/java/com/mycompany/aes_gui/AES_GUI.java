@@ -7,9 +7,14 @@ package com.mycompany.aes_gui;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.crypto.Cipher;
+import javax.crypto.CipherOutputStream;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -39,6 +44,7 @@ public class AES_GUI extends javax.swing.JFrame {
         buttonGroupOutputFormat_E = new javax.swing.ButtonGroup();
         buttonGroupKeySize_D = new javax.swing.ButtonGroup();
         buttonGroupInputFormat_D = new javax.swing.ButtonGroup();
+        buttonGroupKeySize_File = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -82,14 +88,26 @@ public class AES_GUI extends javax.swing.JFrame {
         jButtonSaveFile_D = new javax.swing.JButton();
         jButtonDeleteCiphertext_D = new javax.swing.JButton();
         jButtonDeletePlaintext_D = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jTextFieldPath = new javax.swing.JTextField();
+        jButtonOpenFile_File = new javax.swing.JButton();
+        jButtonEncryptFile = new javax.swing.JButton();
+        jButtonDecryptFile = new javax.swing.JButton();
+        jRadioButton128_File = new javax.swing.JRadioButton();
+        jRadioButton192_File = new javax.swing.JRadioButton();
+        jRadioButton256_File = new javax.swing.JRadioButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jTextFieldKey_File = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("CHUẨN AES VÀ ỨNG DỤNG TRONG MÃ HÓA DỮ LIỆU");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 51));
-        jLabel1.setText("AES");
+        jLabel1.setText("CHUẨN AES VÀ ỨNG DỤNG TRONG MÃ HÓA DỮ LIỆU");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MÃ HÓA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(0, 0, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MÃ HÓA VĂN BẢN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(0, 0, 255))); // NOI18N
         jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(1028, 300));
 
@@ -160,7 +178,7 @@ public class AES_GUI extends javax.swing.JFrame {
         });
 
         jButtonOpenFile_E.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonOpenFile_E.setText("Mở file");
+        jButtonOpenFile_E.setText("Mở file .txt");
         jButtonOpenFile_E.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonOpenFile_EActionPerformed(evt);
@@ -168,7 +186,7 @@ public class AES_GUI extends javax.swing.JFrame {
         });
 
         jButtonSaveFile_E.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonSaveFile_E.setText("Lưu File");
+        jButtonSaveFile_E.setText("Lưu File .txt");
         jButtonSaveFile_E.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveFile_EActionPerformed(evt);
@@ -198,79 +216,86 @@ public class AES_GUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton128_E)
-                    .addComponent(jRadioButton192_E)
-                    .addComponent(jLabel3)
-                    .addComponent(jRadioButtonBASE64_E)
-                    .addComponent(jLabel4)
-                    .addComponent(jRadioButton256_E)
-                    .addComponent(jRadioButtonHEX_E)
-                    .addComponent(jTextFieldKey_E, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(188, 188, 188)
                         .addComponent(jLabel5)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonEncrypt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonDeletePlaintext_E)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonOpenFile_E)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(334, 334, 334)
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonDeleteCiphertext_E)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldKey_E, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButtonHEX_E)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonBASE64_E))
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton128_E)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButton192_E)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButton256_E))
+                            .addComponent(jLabel4))
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonSaveFile_E))
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonEncrypt)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonDeletePlaintext_E)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonOpenFile_E))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButtonDeleteCiphertext_E)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonSaveFile_E))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel5)))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonEncrypt)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonOpenFile_E)
+                                .addComponent(jButtonDeletePlaintext_E))
+                            .addComponent(jButtonSaveFile_E)
+                            .addComponent(jButtonDeleteCiphertext_E)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jTextFieldKey_E, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton128_E)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton192_E)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton256_E)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton128_E)
+                            .addComponent(jRadioButton192_E)
+                            .addComponent(jRadioButton256_E))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonHEX_E))
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonOpenFile_E)
-                        .addComponent(jButtonSaveFile_E)
-                        .addComponent(jButtonDeletePlaintext_E)
-                        .addComponent(jButtonDeleteCiphertext_E))
-                    .addComponent(jButtonEncrypt)
-                    .addComponent(jRadioButtonBASE64_E))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButtonBASE64_E)
+                            .addComponent(jRadioButtonHEX_E))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GIẢI MÃ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(0, 0, 255))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GIẢI MÃ VĂN BẢN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(0, 0, 255))); // NOI18N
         jPanel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -340,7 +365,7 @@ public class AES_GUI extends javax.swing.JFrame {
         jRadioButton192_D.setText("192 bit");
 
         jButtonOpenFile_D.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonOpenFile_D.setText("Mở File");
+        jButtonOpenFile_D.setText("Mở File .txt");
         jButtonOpenFile_D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonOpenFile_DActionPerformed(evt);
@@ -348,7 +373,7 @@ public class AES_GUI extends javax.swing.JFrame {
         });
 
         jButtonSaveFile_D.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonSaveFile_D.setText("Lưu File");
+        jButtonSaveFile_D.setText("Lưu File .txt");
         jButtonSaveFile_D.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSaveFile_DActionPerformed(evt);
@@ -375,82 +400,191 @@ public class AES_GUI extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton128_D)
-                            .addComponent(jRadioButton192_D)
-                            .addComponent(jLabel8)
-                            .addComponent(jRadioButtonBASE64_D)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextFieldKey_D, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel7)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jRadioButton128_D)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jRadioButton192_D)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jRadioButton256_D)))
+                            .addGap(18, 18, 18))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel11)
-                            .addComponent(jRadioButton256_D)
-                            .addComponent(jRadioButtonHEX_D)
-                            .addComponent(jLabel7))
-                        .addGap(163, 163, 163))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextFieldKey_D, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButtonDecrypt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonDeleteCiphertext_D)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonOpenFile_D))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel9)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(jRadioButtonHEX_D)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButtonBASE64_D)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButtonDecrypt)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButtonDeleteCiphertext_D)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonOpenFile_D)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jButtonDeletePlaintext_D)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonSaveFile_D))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jButtonSaveFile_D)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(jLabel9)))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonDecrypt)
+                            .addComponent(jButtonOpenFile_D)
+                            .addComponent(jButtonDeleteCiphertext_D)
+                            .addComponent(jButtonSaveFile_D)
+                            .addComponent(jButtonDeletePlaintext_D)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jTextFieldKey_D, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton128_D)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton192_D)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton256_D)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton128_D)
+                            .addComponent(jRadioButton192_D)
+                            .addComponent(jRadioButton256_D))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonHEX_D))
-                    .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane3))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButtonHEX_D)
+                            .addComponent(jRadioButtonBASE64_D))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "MÃ HÓA VÀ GIẢI MÃ FILE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14), new java.awt.Color(0, 0, 255))); // NOI18N
+
+        jTextFieldPath.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldPath.setText("Mở File hoặc nhập đường dẫn tại đây...!");
+
+        jButtonOpenFile_File.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonOpenFile_File.setText("Mở File");
+        jButtonOpenFile_File.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOpenFile_FileActionPerformed(evt);
+            }
+        });
+
+        jButtonEncryptFile.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonEncryptFile.setText("Mã hóa File");
+        jButtonEncryptFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEncryptFileActionPerformed(evt);
+            }
+        });
+
+        jButtonDecryptFile.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonDecryptFile.setText("Giải mã File");
+        jButtonDecryptFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDecryptFileActionPerformed(evt);
+            }
+        });
+
+        buttonGroupKeySize_File.add(jRadioButton128_File);
+        jRadioButton128_File.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButton128_File.setSelected(true);
+        jRadioButton128_File.setText("128 bit");
+        jRadioButton128_File.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton128_FileActionPerformed(evt);
+            }
+        });
+
+        buttonGroupKeySize_File.add(jRadioButton192_File);
+        jRadioButton192_File.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButton192_File.setText("192 bit");
+
+        buttonGroupKeySize_File.add(jRadioButton256_File);
+        jRadioButton256_File.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jRadioButton256_File.setText("256 bit");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setText("Khóa bí mật:");
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel14.setText("Kích thước khóa:");
+
+        jTextFieldKey_File.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldKey_File, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel14)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jRadioButton128_File)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton192_File)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton256_File)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jButtonEncryptFile)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonDecryptFile))
+                    .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonOpenFile_D)
-                        .addComponent(jButtonSaveFile_D)
-                        .addComponent(jButtonDeleteCiphertext_D)
-                        .addComponent(jButtonDeletePlaintext_D)
-                        .addComponent(jButtonDecrypt))
-                    .addComponent(jRadioButtonBASE64_D))
+                .addComponent(jButtonOpenFile_File)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldKey_File, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonOpenFile_File))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonEncryptFile)
+                        .addComponent(jButtonDecryptFile))
+                    .addComponent(jLabel14))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton128_File)
+                    .addComponent(jRadioButton192_File)
+                    .addComponent(jRadioButton256_File))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -459,26 +593,35 @@ public class AES_GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1037, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(514, 514, 514))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(300, 300, 300)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -495,7 +638,8 @@ public class AES_GUI extends javax.swing.JFrame {
         String ciphertext = "";
         if(jRadioButton128_E.isSelected()) {
             if(key.length() != 16) {
-                JOptionPane.showMessageDialog(this, "Độ dài khóa không phù hợp!");
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
             }
             if(jRadioButtonHEX_E.isSelected()) {
                 ciphertext = AES128.encrypt_hex(plaintext, key);
@@ -506,7 +650,8 @@ public class AES_GUI extends javax.swing.JFrame {
         }
         else if(jRadioButton192_E.isSelected()) {
             if(key.length() != 24) {
-                JOptionPane.showMessageDialog(this, "Độ dài khóa không phù hợp!");
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
             }
             if(jRadioButtonHEX_E.isSelected()) {
                 ciphertext = AES192.encrypt_hex(plaintext, key);
@@ -517,7 +662,8 @@ public class AES_GUI extends javax.swing.JFrame {
         }
         else if(jRadioButton256_E.isSelected()) {
             if(key.length() != 32) {
-                JOptionPane.showMessageDialog(this, "Độ dài khóa không phù hợp!");
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
             }
             if(jRadioButtonHEX_E.isSelected()) {
                 ciphertext = AES256.encrypt_hex(plaintext, key);
@@ -539,7 +685,8 @@ public class AES_GUI extends javax.swing.JFrame {
         String plaintext = "";
         if(jRadioButton128_D.isSelected()) {
             if(key.length() != 16) {
-                JOptionPane.showMessageDialog(this, "Độ dài khóa không phù hợp!");
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
             }
             if(jRadioButtonHEX_D.isSelected()) {
                 plaintext = AES128.decrypt_hex(ciphertext, key);
@@ -550,7 +697,8 @@ public class AES_GUI extends javax.swing.JFrame {
         }
         else if(jRadioButton192_D.isSelected()) {
             if(key.length() != 24) {
-                JOptionPane.showMessageDialog(this, "Độ dài khóa không phù hợp!");
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
             }
             if(jRadioButtonHEX_D.isSelected()) {
                 plaintext = AES192.decrypt_hex(ciphertext, key);
@@ -561,7 +709,8 @@ public class AES_GUI extends javax.swing.JFrame {
         }
         else if(jRadioButton256_D.isSelected()) {
             if(key.length() != 32) {
-                JOptionPane.showMessageDialog(this, "Độ dài khóa không phù hợp!");
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
             }
             if(jRadioButtonHEX_D.isSelected()) {
                 plaintext = AES256.decrypt_hex(ciphertext, key);
@@ -570,11 +719,18 @@ public class AES_GUI extends javax.swing.JFrame {
                 plaintext = AES256.decrypt_base64(ciphertext, key);
             }
         }
+        if(plaintext.equals("Không hợp lệ!")) {
+            JOptionPane.showMessageDialog(this, "Dữ liệu không toàn vẹn!");
+            jTextAreaPlaintext_D.setText("");
+            return;
+        }
         jTextAreaPlaintext_D.setText(plaintext);
     }//GEN-LAST:event_jButtonDecryptActionPerformed
 
     private void jButtonOpenFile_EActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOpenFile_EActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
+        
         int result = fileChooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -593,6 +749,9 @@ public class AES_GUI extends javax.swing.JFrame {
 
     private void jButtonSaveFile_EActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveFile_EActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
+        fileChooser.setSelectedFile(new File("EncryptedFile"));
+
         int result = fileChooser.showSaveDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -608,6 +767,8 @@ public class AES_GUI extends javax.swing.JFrame {
 
     private void jButtonOpenFile_DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOpenFile_DActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
+
         int result = fileChooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -616,7 +777,8 @@ public class AES_GUI extends javax.swing.JFrame {
                 jTextAreaCiphertext_D.setText("");
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    jTextAreaCiphertext_D.append(line + "\n");
+//                    jTextAreaCiphertext_D.append(line + "\n");
+                    jTextAreaCiphertext_D.append(line);
                 }
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Lỗi đọc File: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -626,6 +788,9 @@ public class AES_GUI extends javax.swing.JFrame {
 
     private void jButtonSaveFile_DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveFile_DActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
+        fileChooser.setSelectedFile(new File("DecryptedFile"));
+
         int result = fileChooser.showSaveDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -655,6 +820,131 @@ public class AES_GUI extends javax.swing.JFrame {
         jTextAreaPlaintext_D.setText("");
     }//GEN-LAST:event_jButtonDeletePlaintext_DActionPerformed
 
+    private void jRadioButton128_FileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton128_FileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton128_FileActionPerformed
+
+    private void jButtonOpenFile_FileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOpenFile_FileActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(this);
+        File file = chooser.getSelectedFile();
+        jTextFieldPath.setText(file.getAbsolutePath());
+    }//GEN-LAST:event_jButtonOpenFile_FileActionPerformed
+
+    private void jButtonEncryptFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEncryptFileActionPerformed
+        String inputKey = jTextFieldKey_File.getText();
+        if(jRadioButton128_File.isSelected()) {
+            if(inputKey.length() != 16) {
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
+            }
+        }
+        else if(jRadioButton192_File.isSelected()) {
+            if(inputKey.length() != 24) {
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
+            }
+        }
+        else if(jRadioButton256_File.isSelected()) {
+            if(inputKey.length() != 32) {
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
+            }
+        }
+        
+        try {
+            FileInputStream fileInput = new FileInputStream(jTextFieldPath.getText());
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setSelectedFile(new File("EncryptedFile"));
+
+            int userSelection = fileChooser.showSaveDialog(this);
+            if (userSelection != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+
+            File fileToSave = fileChooser.getSelectedFile();
+            FileOutputStream fileOuput = new FileOutputStream(fileToSave);
+
+            byte[] k = inputKey.getBytes();
+            SecretKeySpec key = new SecretKeySpec(k, "AES");
+            Cipher encrypt = Cipher.getInstance("AES");
+            encrypt.init(Cipher.ENCRYPT_MODE, key);
+
+            CipherOutputStream cos = new CipherOutputStream(fileOuput, encrypt);
+            byte[] buf = new byte[1024];
+            int read;
+            while ((read = fileInput.read(buf)) != -1) {
+                cos.write(buf, 0, read);
+            }
+            fileInput.close();
+            fileOuput.flush();
+            cos.close();
+
+            JOptionPane.showMessageDialog(this, "File đã được mã hóa");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Đường dẫn không hợp lệ hoặc File không tồn tại! Vui lòng kiểm tra lại!");
+        }
+    }//GEN-LAST:event_jButtonEncryptFileActionPerformed
+
+    private void jButtonDecryptFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDecryptFileActionPerformed
+        String inputKey = jTextFieldKey_File.getText();
+        if(jRadioButton128_File.isSelected()) {
+            if(inputKey.length() != 16) {
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
+            }
+        }
+        else if(jRadioButton192_File.isSelected()) {
+            if(inputKey.length() != 24) {
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
+            }
+        }
+        else if(jRadioButton256_File.isSelected()) {
+            if(inputKey.length() != 32) {
+                JOptionPane.showMessageDialog(this, "Khóa bị thay đổi! Vui lòng kiểm tra lại kích thước và nội dung khóa!");
+                return;
+            }
+        }
+        
+        try {
+            FileInputStream fileInput = new FileInputStream(jTextFieldPath.getText());
+            
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setSelectedFile(new File("DecryptedFile"));
+            int userSelection = fileChooser.showSaveDialog(this);
+            
+            if (userSelection != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            
+            File fileToSave = fileChooser.getSelectedFile();
+            FileOutputStream fileOutput = new FileOutputStream(fileToSave);
+            
+            byte k[] = inputKey.getBytes();
+            SecretKeySpec key = new SecretKeySpec(k, "AES");
+            Cipher decrypt = Cipher.getInstance("AES");
+            decrypt.init(Cipher.DECRYPT_MODE, key);
+            
+            CipherOutputStream cos = new CipherOutputStream(fileOutput, decrypt);
+            byte[] buf = new byte[1024];
+            int read;
+            while ((read = fileInput.read(buf)) != -1) {
+                cos.write(buf, 0, read);
+            }
+            fileInput.close();
+            fileOutput.flush();
+            cos.close();
+            JOptionPane.showMessageDialog(this, "Giải mã thành công!");
+            Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler " + fileToSave.getAbsolutePath());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Đường dẫn không hợp lệ hoặc File không tồn tại! Vui lòng kiểm tra lại!");
+        }
+    }//GEN-LAST:event_jButtonDecryptFileActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -682,20 +972,26 @@ public class AES_GUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroupInputFormat_D;
     private javax.swing.ButtonGroup buttonGroupKeySize_D;
     private javax.swing.ButtonGroup buttonGroupKeySize_E;
+    private javax.swing.ButtonGroup buttonGroupKeySize_File;
     private javax.swing.ButtonGroup buttonGroupOutputFormat_E;
     private javax.swing.JButton jButtonDecrypt;
+    private javax.swing.JButton jButtonDecryptFile;
     private javax.swing.JButton jButtonDeleteCiphertext_D;
     private javax.swing.JButton jButtonDeleteCiphertext_E;
     private javax.swing.JButton jButtonDeletePlaintext_D;
     private javax.swing.JButton jButtonDeletePlaintext_E;
     private javax.swing.JButton jButtonEncrypt;
+    private javax.swing.JButton jButtonEncryptFile;
     private javax.swing.JButton jButtonOpenFile_D;
     private javax.swing.JButton jButtonOpenFile_E;
+    private javax.swing.JButton jButtonOpenFile_File;
     private javax.swing.JButton jButtonSaveFile_D;
     private javax.swing.JButton jButtonSaveFile_E;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -706,12 +1002,16 @@ public class AES_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButton128_D;
     private javax.swing.JRadioButton jRadioButton128_E;
+    private javax.swing.JRadioButton jRadioButton128_File;
     private javax.swing.JRadioButton jRadioButton192_D;
     private javax.swing.JRadioButton jRadioButton192_E;
+    private javax.swing.JRadioButton jRadioButton192_File;
     private javax.swing.JRadioButton jRadioButton256_D;
     private javax.swing.JRadioButton jRadioButton256_E;
+    private javax.swing.JRadioButton jRadioButton256_File;
     private javax.swing.JRadioButton jRadioButtonBASE64_D;
     private javax.swing.JRadioButton jRadioButtonBASE64_E;
     private javax.swing.JRadioButton jRadioButtonHEX_D;
@@ -726,5 +1026,7 @@ public class AES_GUI extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextAreaPlaintext_E;
     private javax.swing.JTextField jTextFieldKey_D;
     private javax.swing.JTextField jTextFieldKey_E;
+    private javax.swing.JTextField jTextFieldKey_File;
+    private javax.swing.JTextField jTextFieldPath;
     // End of variables declaration//GEN-END:variables
 }
