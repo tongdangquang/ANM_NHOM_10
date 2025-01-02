@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\AES.csproj",
+      "projectUniqueName": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\AES.csproj",
       "projectName": "AES",
-      "projectPath": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\AES.csproj",
+      "projectPath": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\AES.csproj",
       "packagesPath": "C:\\Users\\quang\\.nuget\\packages\\",
-      "outputPath": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\obj\\",
+      "outputPath": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\quang\\AppData\\Roaming\\NuGet\\NuGet.Config",

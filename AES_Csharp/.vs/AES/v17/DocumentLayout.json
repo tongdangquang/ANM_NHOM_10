@@ -1,17 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\ANM_NHOM_10\\AES_Csharp\\",
+  "WorkspaceRootPath": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|d:\\anm_nhom_10\\aes_csharp\\aes\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|d:\\documents\\an_ninh_mang_haui\\anm_nhom_10\\aes_csharp\\aes\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|solutionrelative:aes\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|d:\\anm_nhom_10\\aes_csharp\\aes\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|d:\\documents\\an_ninh_mang_haui\\anm_nhom_10\\aes_csharp\\aes\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|solutionrelative:aes\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|d:\\anm_nhom_10\\aes_csharp\\aes\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|d:\\documents\\an_ninh_mang_haui\\anm_nhom_10\\aes_csharp\\aes\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{40F1C6E2-A344-47E7-A743-949795D8AA25}|AES\\AES.csproj|solutionrelative:aes\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -44,9 +44,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "App.xaml",
-              "DocumentMoniker": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\App.xaml",
+              "DocumentMoniker": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\App.xaml",
               "RelativeDocumentMoniker": "AES\\App.xaml",
-              "ToolTip": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\App.xaml",
+              "ToolTip": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\App.xaml",
               "RelativeToolTip": "AES\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-12-17T13:15:30.254Z"
@@ -55,9 +55,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml",
+              "DocumentMoniker": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml",
               "RelativeDocumentMoniker": "AES\\MainWindow.xaml",
-              "ToolTip": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml",
+              "ToolTip": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml",
               "RelativeToolTip": "AES\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-12-17T12:42:46.334Z"
@@ -66,11 +66,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "AES\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\Documents\\An_ninh_mang_HaUI\\ANM_NHOM_10\\AES_Csharp\\AES\\MainWindow.xaml.cs",
               "RelativeToolTip": "AES\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAEsBAAAAAAAAAAAAAGwBAAADAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoCAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-17T12:42:42.832Z",
               "EditorCaption": ""
